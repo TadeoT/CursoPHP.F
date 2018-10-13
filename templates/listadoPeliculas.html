@@ -1,0 +1,45 @@
+<center>
+	<table align="center" border="1" cellpadding="3" cellspacing="0">
+		<tr>
+			<form>
+				<input type="hidden" name="action" id="id" method="post" value="peliculas::mostrarPelicula">
+				<select id="sel_categoria" name="sel_categoria">
+					<option value="{vacio}">--Seleccionar Tipo--</option>
+					<!-- START BLOCK : filtros -->
+					<option value="{valor_filtro}">{valor_filtro}</option>
+					<!-- END BLOCK : filtros -->
+				</select>
+				<input type="submit" name="guardar" id="guardar" value="Filtrar">
+			</form>
+
+		</tr>
+		<tr>
+			<th colspan="5" align="center"> <b>{titulo}</b></th>
+		</tr>
+		<tr>
+			<th align="center" width="20%">Nombre</th>
+			<th align="center" width="10%">Genero</th>
+			<th align="center" width="15%">Director</th>
+			<th align="center" width="10%">Duracion</th>
+			<th align="center" width="25%">Actores</th>
+			<th align="center" width="10%">Fecha</th>
+			<th align="center" width="5%">E</th>
+			<th align="center" width="5%">B</th>
+		</tr>
+
+		<!-- START BLOCK : block_listado_peliculas -->
+		<tr>
+			<td>{var_list_nombre}</td>
+			<td>{var_list_genero}</td>
+			<td>{var_list_director}</td>
+			<td>{var_list_duracion}</td>
+			<td>{var_list_actores}</td>
+			<td>{var_list_fecha}</td>
+			<td><a href="index.php?action=peliculas::cambioPelicula&id={var_list_id}"> E </a></td>
+			<td><a href="index.php?action=peliculas::eliminarPelicula&id={var_list_id}"> B </a></td>
+
+		</tr>
+		<!-- END BLOCK : block_listado_peliculas -->
+
+	</table>
+</center>

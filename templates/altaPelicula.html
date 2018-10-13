@@ -1,0 +1,71 @@
+<form id="frmAltaPelicula" name="frmAltaPelicula" method=post>
+  <input type="hidden" name="action" value="peliculas::agregarPelicula">
+
+  <table align="center" border="0" cellpadding="3" cellspacing="0" width="90%">
+
+
+    <tr>
+      <th colspan="4" align="center"> <b>Alta Pel&iacute;cula</b></th>
+    </tr>
+
+    <tr>
+      <td><br /></td>
+    </tr>
+
+    <tr>
+      <th align="right" width="35%">Nombre: </th>
+      <td align="left"><input type="text" name="nombrePelicula" id="nombrePelicula" size="50" maxlength="150"></td>
+    </tr>
+
+    <tr>
+      <th align="right" width="35%">G&eacute;nero: </th>
+      <td align="left">
+
+        <select name="genero" id="genero">
+          <option value="noSelect"> -- Seleccionar un Género -- </option>
+          <!-- START BLOCK : genero -->
+          <option value="{id_genero}">{generos}</option>
+          <!-- END BLOCK : genero -->
+        </select>
+
+      </td>
+    </tr>
+
+    <tr>
+      <th align="right" width="35%">Director: </th>
+      <td align="left">
+        <select name="director" id="director">
+          <option value="noSelect"> -- Seleccionar un Director -- </option>
+          <!-- START BLOCK : director -->
+          <option value="{id_director}">{directores}</option>
+          <!-- END BLOCK : director -->
+        </select>
+      </td>
+    </tr>
+
+    <tr>
+      <th align="right" width="35%">Duraci&oacute;n: </th>
+      <td align="left"><input type="text" name="duracion" id="duracion"></td>
+    </tr>
+
+    <tr>
+      <th align="right" width="35%">Fecha de estreno: </th>
+      <td align="left"><input type="text" name="fechaEstreno" id="fechaEstreno" value="AA/MM/DD"></td>
+    </tr>
+
+
+    <tr>
+      <td><br /></td>
+    </tr>
+    <tr>
+      <td colspan="2" align="center">
+        <input type="button" onclick="location.href='index.php?action=Ingreso::main'" value=" Volver ">
+        <input type="submit" value=" Guardar ">
+      </td>
+    </tr>
+    <tr>
+      <td><br /></td>
+    </tr>
+
+  </table>
+</form>
