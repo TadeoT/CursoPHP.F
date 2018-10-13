@@ -15,9 +15,11 @@ class peliculas_Controller
         $listadoFiltros = $peliculas->verFiltros();
         //FILTROS
         $tpl -> assign("titulo", "Listado Peliculas");
-        foreach ($listadoFiltros as $data) {
-            $tpl->newBlock("filtros");
-            $tpl->assign("valor_filtro", $data ["nombre_filtro"]);
+        if ($listadoFiltros) {
+            foreach ($listadoFiltros as $data) {
+                $tpl->newBlock("filtros");
+                $tpl->assign("valor_filtro", $data ["nombre_filtro"]);
+            }
         }
 
         //Recibe El resultado del filtro
@@ -27,15 +29,16 @@ class peliculas_Controller
 
         if ((!isset($_REQUEST["sel_categoria"])) || ($_REQUEST["sel_categoria"] == "")|| ($filtro ==="NoActores")) {
             $listadoPelicula = $peliculas->todasLasPeliculas();
-                
-            foreach ($listadoPelicula as $data) {
-                $tpl->newBlock("block_listado_peliculas");
-                $tpl->assign("var_list_nombre", $data ["pe_nombre"]);
-                $tpl->assign("var_list_genero", $data ["ge_nombre"]);
-                $tpl->assign("var_list_director", $data ["di_nombreArtistico"]);
-                $tpl->assign("var_list_duracion", $data ["pe_duracion"]);
-                $tpl->assign("var_list_fecha", $data["pe_fechaEstreno"]);
-                $tpl->assign("var_list_id", $data["id_pelicula"]);
+            if (isset($listadoPelicula)) {
+                foreach ($listadoPelicula as $data) {
+                    $tpl->newBlock("block_listado_peliculas");
+                    $tpl->assign("var_list_nombre", $data ["pe_nombre"]);
+                    $tpl->assign("var_list_genero", $data ["ge_nombre"]);
+                    $tpl->assign("var_list_director", $data ["di_nombreArtistico"]);
+                    $tpl->assign("var_list_duracion", $data ["pe_duracion"]);
+                    $tpl->assign("var_list_fecha", $data["pe_fechaEstreno"]);
+                    $tpl->assign("var_list_id", $data["id_pelicula"]);
+                }
             }
         } else {
 
@@ -71,9 +74,13 @@ class peliculas_Controller
         $id=$_GET['id'];
 
         $peliculas -> eliminarPelicula($id);
+        if ($peliculas==false) {
+            return "No se pudo eliminar la pelicula";
+        }
+
         $peliculas -> eliminarActorPelicula($id);
 
-        return "Pelicula eliminada Exitosamente!";
+        return  $this->mostrarPelicula();
     }
     public function cambioPelicula()
     {
@@ -83,19 +90,43 @@ class peliculas_Controller
         $peliculas = new peliculas_model;
         $id=$_GET['id'];
         
-        echo $id;
+        $datosPeli = $peliculas->cargarCampos($id);
+        if (isset($datosPeli)) {
+            foreach ($datosPeli as $data) {
+                $tpl->assign("p_nombre", $data['pe_nombre']);
+                $tpl->assign("p_duracion", $data['pe_duracion']);
+                $tpl->assign("p_estreno", $data['pe_fechaEstreno']);
+                $genero = $data['id_genero'];
+                $director = $data['id_director'];
+            }
+        }
         $tpl->assign("id_p", $id);
         $listadoGenero = $peliculas->verGenero();
-        foreach ($listadoGenero as $data) {
-            $tpl->newBlock("genero");
-            $tpl->assign("id_genero", $data['id_genero']);
-            $tpl->assign("generos", $data['ge_nombre']);
+        if (isset($listadoGenero)) {
+            foreach ($listadoGenero as $data) {
+                $tpl->newBlock("genero");
+                $tpl->assign("id_genero", $data['id_genero']);
+                if ($genero == $data['id_genero']) {
+                    $tpl->assign("var_select_g", "selected");
+                } else {
+                    $tpl->assign("var_select_g", "");
+                }
+                $tpl->assign("generos", $data['ge_nombre']);
+            }
         }
         $listadoDirector = $peliculas->verDirector();
-        foreach ($listadoDirector as $data) {
-            $tpl->newBlock("director");
-            $tpl->assign("id_director", $data['id_director']);
-            $tpl->assign("directores", $data['di_nombreArtistico']);
+        if (isset($listadoDirector)) {
+            foreach ($listadoDirector as $data) {
+                $tpl->newBlock("director");
+                $tpl->assign("id_director", $data['id_director']);
+                if ($director == $data['id_director']) {
+                    $tpl->assign("var_select_d", "selected");
+                } else {
+                    $tpl->assign("var_select_d", "");
+                }
+
+                $tpl->assign("directores", $data['di_nombreArtistico']);
+            }
         }
         return $tpl->getOutputContent();
     }
@@ -112,7 +143,7 @@ class peliculas_Controller
 
 
         $peliculas -> cambiarPelicula($nombre, $genero, $director, $duracion, $estreno, $id);
-        return  "Cambio Exitoso!";
+        return  $this->mostrarPelicula();
     }
     public function agregarPelicula()
     {
@@ -124,7 +155,7 @@ class peliculas_Controller
         $estreno =$_REQUEST['fechaEstreno'];
 
         $peliculas->agregarPelicula($nombre, $genero, $director, $duracion, $estreno);
-        return"Pelicula cargada Exitosamente!";
+        return  $this->mostrarPelicula();
     }
     public function altaPelicula()
     {

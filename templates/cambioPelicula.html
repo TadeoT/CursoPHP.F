@@ -14,7 +14,8 @@
 
         <tr>
             <th align="right" width="35%">Nombre: </th>
-            <td align="left"><input type="text" name="nombrePelicula" id="nombrePelicula" size="50" maxlength="150"></td>
+            <td align="left"><input value="{p_nombre}" type=" text" name="nombrePelicula" id="nombrePelicula" size="50"
+                    maxlength="150"></td>
         </tr>
         <input type="hidden" name="id_p" id="id_p" value={id_p}>
         <tr>
@@ -24,7 +25,7 @@
                 <select name="genero" id="genero">
                     <option value="noSelect"> -- Seleccionar un Género -- </option>
                     <!-- START BLOCK : genero -->
-                    <option value="{id_genero}">{generos}</option>
+                    <option value="{id_genero}" {var_select_g}>{generos}</option>
                     <!-- END BLOCK : genero -->
                 </select>
 
@@ -37,20 +38,20 @@
                 <select name="director" id="director">
                     <option value="noSelect"> -- Seleccionar un Director -- </option>
                     <!-- START BLOCK : director -->
-                    <option value="{id_director}">{directores}</option>
+                    <option value="{id_director}" {var_select_d}>{directores}</option>
                     <!-- END BLOCK : director -->
                 </select>
             </td>
         </tr>
 
         <tr>
-            <th align="right" width="35%">Duracición: </th>
-            <td align="left"><input type="text" name="duracion" id="duracion"></td>
+            <th align="right" width="35%">Duración: </th>
+            <td align="left"><input value="{p_duracion}" type="text" name="duracion" id="duracion"></td>
         </tr>
 
         <tr>
             <th align="right" width="35%">Fecha de estreno: </th>
-            <td align="left"><input type="text" name="fechaEstreno" id="fechaEstreno" value="AA/MM/DD"></td>
+            <td align="left"><input value="{p_estreno}" type="text" name="fechaEstreno" id="fechaEstreno" value="AA/MM/DD"></td>
         </tr>
 
 

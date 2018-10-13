@@ -67,6 +67,12 @@ class peliculas_model
         global $db;
         $sql = "DELETE FROM `pelicula` WHERE `id_pelicula`= $idPelicula ";
         $result= $db->query($sql);
+
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
     }
     public function eliminarActorPelicula($idPelicula)
     {
@@ -128,5 +134,15 @@ class peliculas_model
         } else {
             return false;
         }
+    }
+    public function cargarCampos($id)
+    {
+        global $db;
+        $sql="SELECT p.id_pelicula,`ge_nombre`,`di_nombreArtistico`,`pe_nombre`,`pe_duracion`,`pe_fechaEstreno`,g.id_genero,d.id_director
+              FROM pelicula p,genero g,director d 
+              WHERE p.id_genero = g.id_genero and p.id_director = d.id_director and p.id_pelicula = $id";
+        $result = $db->query($sql);
+
+        return $result;
     }
 }
