@@ -1,4 +1,2 @@
-# CursoPHP
-sistema de cine 
-
-Tiraboschi Tadeo
+# PHP
+Aplicacion Monolitica para el manejo de peliculas
